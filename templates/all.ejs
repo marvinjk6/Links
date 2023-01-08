@@ -11,19 +11,18 @@
 
     <div class="container">
 
-        <h1>Adicionar Link</h1>
+        <h1>Todos os links</h1>
 
-        <form method="post" action="/">
-            <input type="text" name="title" value="<%=body.title%>" placeholder="Título">
-            <input type="text" name="description" value="<%=body.description%>" placeholder="Descrição">
-            <input type="text" name="url" value="<%=body.url%>" placeholder="URL">
-            <button>adicionar</button>
-        </form>
+        <!-- como no backend foi usado links, aqui precisa ter o mesmo nome -->
 
-        <% if(error) { %>
-            <strong>Erro: </strong> <%= error.message %> 
+        <% for(let i = 0; i < links.length; i++) {%> 
+            <div id="<%=links[i]._id%>">
+                <h2><%=links[i].title%></h2>
+                <div><%=links[i].description%></div>
+                <div><%=links[i].url%></div>
+            </div>
         <% } %> 
-
     </div>  
+
 </body>
 </html>

@@ -21,9 +21,20 @@ const addLink = async (req, res) => {
         res.redirect('/');
     } catch(error) {
         res.render('add', {error, body: req.body});
-        // error precisa ser enviado caso haja um erro
-        // o body é enviado de volta para não apagar o que já foi preenchido pelo usuário
     };
 };
 
-module.exports = {redirect, addLink};
+const allLinks = async (req, res) => {
+
+    try {
+        // pegar todos os documentos
+        // renderizar o template all, e enviar os docs
+        // foi chamado de links para fazer a conexão com all.ejs
+        let docs = await Link.find({});
+        res.render('all', {links: docs});
+    } catch(error) {
+        res.send(error);
+    };
+};
+
+module.exports = {redirect, addLink, allLinks};
