@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const path = require('path'); //adicionado path
 const mongoose = require('mongoose');
 const linkRouter = require('./routes/linkRouter');
 
@@ -13,7 +14,10 @@ mongoose.connect(process.env.MONGO_CONNECTION_URL , (error)=>{
     }
 });
 
-app.get('/', (req, res) => res.send('Hello World'));
+// adicionado os templates
+// npm install ejs
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'templates'));
 
 app.use('/', linkRouter);
 

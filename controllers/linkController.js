@@ -18,7 +18,7 @@ const addLink = async (req, res) => {
 
     try {
         await doc.save();
-        res.send(doc)
+        res.redirect('/');
     } catch(error) {
         res.send(error);
     };
