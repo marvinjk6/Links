@@ -9,22 +9,28 @@
 </head>
 <body>
 
-    <!--
-        - name precisa ser o mesmo definido no schema do documento, para fazer a conexão
-        - action para a rota '/' 
-        - method post para enviar o formulário 
-    -->
-
     <div class="container">
 
         <h1>Adicionar Link</h1>
-        
+
+        <!-- 
+            foi adicionado value <%=body.title%>, <%=body.description%>, <%=body.url%>
+            para fazer a conexão com o backend e manter os dados que o usuário já preencheu caso aconteça algum erro
+        -->
+
         <form method="post" action="/">
-            <input type="text" name="title" placeholder="Título">
-            <input type="text" name="description" placeholder="Descrição">
-            <input type="text" name="url" placeholder="URL">
+            <input type="text" name="title" value="<%=body.title%>" placeholder="Título">
+            <input type="text" name="description" value="<%=body.description%>" placeholder="Descrição">
+            <input type="text" name="url" value="<%=body.url%>" placeholder="URL">
             <button>adicionar</button>
         </form>
+
+        <!-- código que vai colocar o erro na tela -->
+
+        <% if(error) { %>
+            <strong>Erro: </strong> <%= error.message %> 
+        <% } %> 
+
     </div>  
 </body>
 </html>

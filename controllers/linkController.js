@@ -20,7 +20,9 @@ const addLink = async (req, res) => {
         await doc.save();
         res.redirect('/');
     } catch(error) {
-        res.send(error);
+        res.render('add', {error, body: req.body});
+        // error precisa ser enviado caso haja um erro
+        // o body é enviado de volta para não apagar o que já foi preenchido pelo usuário
     };
 };
 
