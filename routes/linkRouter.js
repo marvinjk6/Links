@@ -10,4 +10,9 @@ router.get('/', (req, res)=> res.render('add', {error: false, body: {} }));
 
 router.post('/', express.urlencoded({extended: true}), linkControler.addLink);
 
+router.delete('/:id', linkControler.deleteLink);
+
+// rota para deletar com o fetch
+router.delete('/', express.json(), linkControler.deleteLink);
+
 module.exports = router;

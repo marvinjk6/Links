@@ -27,9 +27,6 @@ const addLink = async (req, res) => {
 const allLinks = async (req, res) => {
 
     try {
-        // pegar todos os documentos
-        // renderizar o template all, e enviar os docs
-        // foi chamado de links para fazer a conexão com all.ejs
         let docs = await Link.find({});
         res.render('all', {links: docs});
     } catch(error) {
@@ -37,4 +34,18 @@ const allLinks = async (req, res) => {
     };
 };
 
-module.exports = {redirect, addLink, allLinks};
+const deleteLink = async (req, res) => {
+
+    let id = req.params.id;
+
+    try {
+        //await Link.deleteOne({_id: id});
+        await Link.findByIdAndDelete(id);
+        res.send(id); // enviando o id para o fetch saber
+    } catch(error) {
+        //caso tenha algum erro, precisa colocar status(404) para enviar o erro
+        res.status(404).send(error);
+    };
+};
+
+module.exports = {redirect, addLink, allLinks, deleteLink};
