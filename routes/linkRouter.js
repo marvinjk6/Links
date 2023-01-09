@@ -16,7 +16,7 @@ router.post('/', express.urlencoded({extended: true}), linkControler.addLink);
 
 router.delete('/:id', linkControler.deleteLink);
 
-// rota para deletar com o fetch
-router.delete('/', express.json(), linkControler.deleteLink);
+// rota para deletar com o formulário 
+router.delete('/', express.urlencoded({extended: true}), linkControler.deleteLink);
 
 module.exports = router;
