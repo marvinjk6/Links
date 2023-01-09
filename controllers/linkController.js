@@ -5,7 +5,6 @@ const redirect = async (req, res, next) => {
     let title = req.params.title;
 
     try {
-        // encontrar o documento que tem o mesmo title recebido pela requisição, passar como segundo argumento o que será modificado
         let doc = await Link.findOneAndUpdate({title}, {$inc: {clicks: 1}});
         if(doc) {
             res.redirect(doc.url);
@@ -48,25 +47,19 @@ const deleteLink = async (req, res) => {
     }
 
     try {
-        //await Link.deleteOne({_id: id});
         await Link.findByIdAndDelete(id);
-        res.redirect('/'); // enviando o id para o fetch saber
+        res.redirect('/'); 
     } catch(error) {
-        //caso tenha algum erro, precisa colocar status(404) para enviar o erro
         res.status(404).send(error);
     };
 };
 
 const loadLink = async (req, res) => {
 
-    // pegar o id pelo action do formulário
     let id = req.params.id;
 
     try {
-        
         let doc = await Link.findById(id)
-        // renderizar o template edit e mandar o doc pelo body, para poder fazer a edição
-        // precisa passar error false, pois todos os campos devem ser preenchidos, se não preencher dispara o erro
         res.render('edit', {error: false, body: doc});
     } catch(error) {
         res.status(404).send(error);
@@ -75,7 +68,6 @@ const loadLink = async (req, res) => {
 
 const editLink = async (req, res) => {
 
-    // depois que o documento foi encontrado pelo load, vamos atualizar ele
     let link = {};
     link.title = req.body.title;
     link.description = req.body.description;
@@ -88,7 +80,6 @@ const editLink = async (req, res) => {
     }
 
     try {
-        //let doc = await Link.findByIdAndUpdate(id, link);
         let doc = await Link.updateOne({_id: id}, link);
         res.redirect('/')
     } catch(error) {

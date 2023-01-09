@@ -13,10 +13,6 @@
 
         <h1 class="d-flex justify-content-center my-4">Editar Link</h1>
 
-        <!-- usar o método post porque ele permite fazer update-->
-        <!-- em action foi passado edit e o id para pegar pela url-->
-        <!-- criar uma rota get para renderizar o template e uma rota post para editar o documento-->
-
         <form class="d-flex flex-column mb-2" method="post" action="/edit/<%=body.id%>">
             <input class="mb-2" type="text" name="title" value="<%=body.title%>" placeholder="Título">
             <input class="mb-2" type="text" name="description" value="<%=body.description%>" placeholder="Descrição">
