@@ -38,10 +38,14 @@ const deleteLink = async (req, res) => {
 
     let id = req.params.id;
 
+    if(!id) {
+        id = req.body.id
+    }
+
     try {
         //await Link.deleteOne({_id: id});
         await Link.findByIdAndDelete(id);
-        res.send(id); // enviando o id para o fetch saber
+        res.redirect('/all'); // enviando o id para o fetch saber
     } catch(error) {
         //caso tenha algum erro, precisa colocar status(404) para enviar o erro
         res.status(404).send(error);

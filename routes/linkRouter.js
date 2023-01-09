@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const linkControler = require('../controllers/linkController');
+const methodOverride = require('method-override');
+
+// agora todas as rotas tem acesso ao method-override
+router.use(methodOverride('_method'));
 
 router.get('/all', linkControler.allLinks);
 

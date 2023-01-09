@@ -15,39 +15,19 @@
         <a href="/">adicionar link</a> <!-- '/' é a rota -->
 
         <!-- como no backend foi usado links, aqui precisa ter o mesmo nome -->
-
+        <!-- o formulário não aceita método delete, usamos o method-override para isso ser possivel-->
         <% for(let i = 0; i < links.length; i++) {%> 
-            <div id="<%=links[i]._id%>">
-                <h2><%=links[i].title%></h2>
-                <div><%=links[i].description%></div>
-                <div><%=links[i].url%></div>
-                <button onclick="deleteLink('<%=links[i]._id%>')">delete</button>
-            </div>
+                <div id="<%=links[i]._id%>">
+                    <form method="POST" action="/<%=links[i]._id%>?_method=DELETE">
+                        <h2><%=links[i].title%></h2>
+                        <div><%=links[i].description%></div>
+                        <div><%=links[i].url%></div>
+                        <button>deletar</button>
+                    </form>
+                </div>
         <% } %> 
     </div>  
 
-    <script>
-        // foi passado o id com aspas simples
-        // '/' + id, foi usado para fazer o fetch na rota delete que vai ter o express.json
-        function deleteLink(id) {
-
-            fetch("/" + id, { method: "DELETE" }).then(res => {
-                // se a resposta for bem sucedida vai remover o documento
-                // o id é mandado como resposta
-                if (res.status == 200) {
-                    res.text().then(linkId => document.getElementById(linkId).remove())
-                } else {
-                    // caso aconteça um erro vai aparecer o alert
-                    res.json().then(error => alert(error.message)
-                    )
-                }
-            })
-        }
-
-         /* foi colocado no onclick o id do documento como argumento da função deleteLink
-         o fetch pode mandar como resposta varias coisas, no controller vamos mandar o id como resposta
-         */
-    </script>
 
 </body>
 </html>
