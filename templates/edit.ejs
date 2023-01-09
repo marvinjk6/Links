@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Add Link</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Editar Link</h1>
+
+        <!-- usar o método post porque ele permite fazer update-->
+        <!-- em action foi passado edit e o id para pegar pela url-->
+        <!-- criar uma rota get para renderizar o template e uma rota post para editar o documento-->
+
+        <form method="post" action="/edit/<%=body.id%>">
+            <input type="text" name="title" value="<%=body.title%>" placeholder="Título">
+            <input type="text" name="description" value="<%=body.description%>" placeholder="Descrição">
+            <input type="text" name="url" value="<%=body.url%>" placeholder="URL">
+            <button>editar</button>
+        </form>
+
+        <% if(error) { %>
+            <strong>Erro: </strong> <%= error.message %> 
+        <% } %> 
+
+    </div>  
+</body>
+</html>

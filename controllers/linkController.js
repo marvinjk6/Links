@@ -52,4 +52,44 @@ const deleteLink = async (req, res) => {
     };
 };
 
-module.exports = {redirect, addLink, allLinks, deleteLink};
+const loadLink = async (req, res) => {
+
+    // pegar o id pelo action do formulário
+    let id = req.params.id;
+
+    try {
+        
+        let doc = await Link.findById(id)
+        // renderizar o template edit e mandar o doc pelo body, para poder fazer a edição
+        // precisa passar error false, pois todos os campos devem ser preenchidos, se não preencher dispara o erro
+        res.render('/edit', {error: false, body: doc});
+    } catch(error) {
+        res.status(404).send(error);
+    };
+};
+
+const editLink = async (req, res) => {
+
+    // depois que o documento foi encontrado pelo load, vamos atualizar ele
+    let link = {};
+    link.title = req.body.title;
+    link.description = req.body.description;
+    link.url = req.body.url;
+
+    let id = req.params.id;
+
+    if(!id) {
+        id = req.body.id
+    }
+
+    try {
+        //let doc = await Link.findByIdAndUpdate(id, link);
+        let doc = await Link.updateOne({_id: id}, link);
+        res.redirect('/all')
+    } catch(error) {
+        res.render('edit', {error, body: req.body});
+    };
+};
+
+
+module.exports = {redirect, addLink, allLinks, deleteLink, loadLink, editLink};
