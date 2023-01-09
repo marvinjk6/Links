@@ -62,7 +62,7 @@ const loadLink = async (req, res) => {
         let doc = await Link.findById(id)
         // renderizar o template edit e mandar o doc pelo body, para poder fazer a edição
         // precisa passar error false, pois todos os campos devem ser preenchidos, se não preencher dispara o erro
-        res.render('/edit', {error: false, body: doc});
+        res.render('edit', {error: false, body: doc});
     } catch(error) {
         res.status(404).send(error);
     };
