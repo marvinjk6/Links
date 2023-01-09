@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <title>Add Link</title>
+    <title>All Links</title>
 </head>
 <body>
 
@@ -17,14 +17,18 @@
         <!-- como no backend foi usado links, aqui precisa ter o mesmo nome -->
         <!-- o formulário não aceita método delete, usamos o method-override para isso ser possivel-->
         <% for(let i = 0; i < links.length; i++) {%> 
-                <div id="<%=links[i]._id%>">
-                    <form method="POST" action="/<%=links[i]._id%>?_method=DELETE">
-                        <h2><%=links[i].title%></h2>
-                        <div><%=links[i].description%></div>
-                        <div><%=links[i].url%></div>
-                        <button>deletar</button>
-                        <!-- link para ir para página de edição -->
-                        <a href="/edit/<%=links[i]._id%>">editar</a>
+                <div class="card p-3 my-3" id="<%=links[i]._id%>">
+                    <form class="d-flex justify-content-between align-items-center" method="POST" action="/<%=links[i]._id%>?_method=DELETE">
+                        <div class="d-flex flex-column">
+                            <h2><%=links[i].title%></h2>
+                            <div><%=links[i].description%></div>
+                            <div class="text-muted"><%=links[i].url%></div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <!-- link para ir para página de edição -->
+                            <a class="btn btn-info mb-1" href="/edit/<%=links[i]._id%>">editar</a>
+                            <button class="btn btn-danger">deletar</button>
+                        </div>
                     </form>
                 </div>
         <% } %> 
