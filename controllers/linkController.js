@@ -1,12 +1,18 @@
 const Link = require('../models/Link');
 
-const redirect = async (req, res) => {
+const redirect = async (req, res, next) => {
 
     let title = req.params.title;
 
     try {
         let doc = await Link.findOne({title});
-        res.redirect(doc.url);
+        if(doc) {
+            res.redirect(doc.url);
+        } else {
+            next(); /* esse next serve para caso o redirect não encontrar no banco de dados um title que existe para um doc, ir para proxima rota,
+            por exemplo se colocar /all na url, ele vai procurar algum documento com o title all, ele não vai achar, e vai para proxima, sem o next ele manda um objeto vazio pois não encontrou nenhum objeto  */
+
+        }
     } catch(error) {
         res.send(error);
     };
@@ -18,7 +24,7 @@ const addLink = async (req, res) => {
 
     try {
         await doc.save();
-        res.redirect('/all');
+        res.redirect('/');
     } catch(error) {
         res.render('add', {error, body: req.body});
     };
@@ -45,7 +51,7 @@ const deleteLink = async (req, res) => {
     try {
         //await Link.deleteOne({_id: id});
         await Link.findByIdAndDelete(id);
-        res.redirect('/all'); // enviando o id para o fetch saber
+        res.redirect('/'); // enviando o id para o fetch saber
     } catch(error) {
         //caso tenha algum erro, precisa colocar status(404) para enviar o erro
         res.status(404).send(error);
@@ -85,7 +91,7 @@ const editLink = async (req, res) => {
     try {
         //let doc = await Link.findByIdAndUpdate(id, link);
         let doc = await Link.updateOne({_id: id}, link);
-        res.redirect('/all')
+        res.redirect('/')
     } catch(error) {
         res.render('edit', {error, body: req.body});
     };
