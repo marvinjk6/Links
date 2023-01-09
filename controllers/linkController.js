@@ -5,13 +5,12 @@ const redirect = async (req, res, next) => {
     let title = req.params.title;
 
     try {
-        let doc = await Link.findOne({title});
+        // encontrar o documento que tem o mesmo title recebido pela requisição, passar como segundo argumento o que será modificado
+        let doc = await Link.findOneAndUpdate({title}, {$inc: {clicks: 1}});
         if(doc) {
             res.redirect(doc.url);
         } else {
-            next(); /* esse next serve para caso o redirect não encontrar no banco de dados um title que existe para um doc, ir para proxima rota,
-            por exemplo se colocar /all na url, ele vai procurar algum documento com o title all, ele não vai achar, e vai para proxima, sem o next ele manda um objeto vazio pois não encontrou nenhum objeto  */
-
+            next(); 
         }
     } catch(error) {
         res.send(error);
